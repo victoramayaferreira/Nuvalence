@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nuvalence Technical Test - Victor Amaya</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<main role="main" class="container">
+
+    <div class="starter-template">
+        <h1>Nuvalence Technical Test - Victor Amaya</h1>
+    </div>
+
+    <div class="col-md-8 mx-auto">
+        <form th:action="@{/rectangles/draw}" th:object="${rectangles}" method="post">
+
+            <table>
+                <tr>
+                    <td>
+                        <h2>Rectangle 1</h2>
+                        <div class="form-row">
+                            <div class="col-md-6 form-group">
+                                <label>X0:</label>
+                                <input type="number" class="form-control" th:value="${rectangles.rectangle1.x0}" id="rectangle1.x0" name="rectangle1.x0">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Y0:</label>
+                                <input type="number" class="form-control" th:value="${rectangles.rectangle1.y0}" id="rectangle1.y0" name="rectangle1.y0">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Width:</label>
+                                <input type="number" class="form-control" th:value="${rectangles.rectangle1.width}" id="rectangle1.width" name="rectangle1.width">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Height:</label>
+                                <input type="number" class="form-control" th:value="${rectangles.rectangle1.height}" id="rectangle1.height" name="rectangle1.height">
+                            </div>
+                        </div>
+                    </td>
+
+                    <td>
+                        <h2>Rectangle 2</h2>
+                        <div class="form-row">
+                            <div class="col-md-6 form-group">
+                                <label>X0:</label>
+                                <input type="number" class="form-control" th:value="${rectangles.rectangle2.x0}" id="rectangle2.x0" name="rectangle2.x0">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Y0:</label>
+                                <input type="number" class="form-control" th:value="${rectangles.rectangle2.y0}" id="rectangle2.y0" name="rectangle2.y0">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Width:</label>
+                                <input type="number" class="form-control" th:value="${rectangles.rectangle2.width}" id="rectangle2.width" name="rectangle2.width">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Height:</label>
+                                <input type="number" class="form-control" th:value="${rectangles.rectangle2.height}" id="rectangle2.height" name="rectangle2.height">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <button type="submit" class="btn btn-primary btn-block mt-3">Draw</button>
+        </form>
+    </div>
+
+    <div class="col-md-8 mx-auto">
+        <canvas id="DemoCanvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
+    </div>
+
+    <div class="col-md-10 mx-auto">
+        <table>
+            <tr>
+                <td>
+                    <button onclick="updateIntersectionStatus()" class="btn btn-primary btn-block">Show Intersection</button>
+                </td>
+                <td>
+                    <input type="text" id="intersection" name="intersection" style="width: 400px;"><br>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <button onclick="updateContainmentStatus()" class="btn btn-primary btn-block">Show Containment</button>
+                </td>
+                <td>
+                    <input type="text" id="containment" name="containment"><br>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <button onclick="updateAdjacencyStatus()" class="btn btn-primary btn-block">Show Adjacency</button>
+                </td>
+                <td>
+                    <input type="text" id="adj" name="adj"><br>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+</main>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var canvas = document.getElementById("DemoCanvas");
+    if (canvas.getContext)
+    {
+     var ctx = canvas.getContext('2d');
+
+     var rectangle1X0 = /*[[${rectangles.rectangle1.x0}]]*/ 'default';
+     var rectangle1Y0 = /*[[${rectangles.rectangle1.y0}]]*/ 'default';
+     var rectangle1Width = /*[[${rectangles.rectangle1.width}]]*/ 'default';
+     var rectangle1Height = /*[[${rectangles.rectangle1.height}]]*/ 'default';
+
+     var rectangle2X0 = /*[[${rectangles.rectangle2.x0}]]*/ 'default';
+     var rectangle2Y0 = /*[[${rectangles.rectangle2.y0}]]*/ 'default';
+     var rectangle2Width = /*[[${rectangles.rectangle2.width}]]*/ 'default';
+     var rectangle2Height = /*[[${rectangles.rectangle2.height}]]*/ 'default';
+
+     canvas.width= (rectangle1Width+rectangle1X0) > (rectangle2Width+rectangle2X0) ? rectangle1Width+rectangle1X0+10 : rectangle2Width+rectangle2X0+10;
+     canvas.height= (rectangle1Height+rectangle1Y0) > (rectangle2Height+rectangle2Y0) ? rectangle1Height+rectangle1Y0+10 : rectangle2Height+rectangle2Y0+10;
+
+     ctx.lineWidth = "3";
+     ctx.strokeStyle = "red";
+     ctx.strokeRect(rectangle1X0, rectangle1Y0, rectangle1Width, rectangle1Height);
+     ctx.lineWidth = "3";
+     ctx.lineJoin = "bevel";
+     ctx.strokeStyle = "blue";
+     ctx.strokeRect(rectangle2X0, rectangle2Y0, rectangle2Width, rectangle2Height);
+    }
+    /*]]>*/
+</script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function updateIntersectionStatus() {
+      document.getElementById("intersection").value =   /*[[${rectangles.intersection}]]*/ 'default';
+    }
+
+    function updateContainmentStatus() {
+      document.getElementById("containment").value =   /*[[${rectangles.containment}]]*/ 'default';
+    }
+
+    function updateAdjacencyStatus() {
+      document.getElementById("adj").value =   /*[[${rectangles.adjacency}]]*/ 'default';
+    }
+
+    /*]]>*/
+</script>
+
+</body>
+</html>
