@@ -2,10 +2,8 @@ package com.nuvalence.test.rectangle.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
-@Setter
 @NoArgsConstructor
 public class Rectangle {
     private int x0;
@@ -103,14 +101,14 @@ public class Rectangle {
                 x == x0+width) &&
                 y == y0 &&
                 y+h == y0+height) {
-                return true;
+            return true;
         } else if ( (y+h == y0 ||
                 y == y0 ||
                 y+h == y0+height ||
                 y == y0+height) &&
                 x==x0 &&
                 x+w==x0+width) {
-                return true;
+            return true;
         }
 
         return false;
@@ -128,15 +126,15 @@ public class Rectangle {
                 x == x0+width) &&
                 y >= y0 &&
                 y+h <= y0+height) {
-                return true;
+            return true;
         } else if ( (y+h == y0 ||
                 y == y0 ||
                 y+h == y0+height ||
                 y == y0+height) &&
                 x>=x0 &&
                 x+w<=x0+width) {
-                return true;
-            }
+            return true;
+        }
 
         return false;
     }
@@ -151,15 +149,15 @@ public class Rectangle {
                 x == x0 ||
                 x+w == x0+width ||
                 x == x0+width) &&
-                (y >= y0 && y<=y0+height) ||
-                (y+h <= y0+height && y+h >= y0) ) {
+                ((y >= y0 && y<=y0+height) ||
+                (y+h <= y0+height && y+h >= y0)) ) {
             return true;
         } else if ( (y+h == y0 ||
                 y == y0 ||
                 y+h == y0+height ||
                 y == y0+height) &&
-                (x>=x0 && x<=x0+width) ||
-                (x+w<=x0+width && x+w>=x0) ) {
+                ((x>=x0 && x<=x0+width) ||
+                (x+w<=x0+width && x+w>=x0)) ) {
             return true;
         }
 
